@@ -108,7 +108,7 @@
 
 
 
-	//give to global scope access:
+	//to global scope access:
 	window.ApplicationController = ApplicationController;
 
 }(window));

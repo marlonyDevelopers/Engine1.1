@@ -4,10 +4,12 @@
 	//public functions
 
 	function BingoController(gameConfig, roundConfig, callGetCreditsEverySeconds, callJackpotEverySeconds){ //(gameConfig:GameConfig, roundConfig:RoundConfig, callGetCreditsEverySeconds:Number, callJackpotEverySeconds:Number)
-		this.gameConfig             = gameConfig;
-		this.roundConfig            = roundConfig as BingoRoundConfig;
-		_callGetCreditsEverySeconds = callGetCreditsEverySeconds;
-		_callJackpotEverySeconds    = callJackpotEverySeconds;
+		
+		console.log("BingoController created");
+		this.gameConfig                  = gameConfig;
+		this.roundConfig                 = roundConfig;
+		this._callGetCreditsEverySeconds = callGetCreditsEverySeconds;
+		this._callJackpotEverySeconds    = callJackpotEverySeconds;
 	}
 
 
