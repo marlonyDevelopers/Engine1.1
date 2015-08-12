@@ -33,10 +33,10 @@
 
 		_instance = this;
 		
-		if(parameters == null){
+		if(ApplicationController.prototype.parameters == null){
 			loadParams();
 		}else{
-			this.parameters = parameters;
+			ApplicationController.prototype.parameters = parameters;
 		}
 
 
@@ -102,8 +102,28 @@
 
 
 	//private functions
-	function loadParams(){
-		console.log('load params function here');
+
+	function loadParams(objetoParams){
+		console.log('TEST - loadParams - leer ApplicationController');
+		//ApplicationController.prototype.parameters = "ShowBall3";
+
+
+ 		/*
+ 		Los de web deben dejar guardado un  objeto en algun lado, por ejemplo en objeto window:
+ 		window.loadParams = {};
+		*/
+
+
+		//TEST
+		window.language = "es";
+		window.session  = "FREEOOJJAGHGA222453789";
+		window.routes   = "eeee";
+
+
+		ApplicationController.prototype.parameters          = new ParametersData();
+		ApplicationController.prototype.parameters.language = window.language;
+		ApplicationController.prototype.parameters.session  = window.session;
+		ApplicationController.prototype.parameters.routes   = window.routes;
 	}
 
 

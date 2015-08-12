@@ -7,6 +7,7 @@
 	<script src="communications/server/SocketServer.js"></script>
 	<script src="mvc/controllers/general/GameTypeController.js"></script>
 	<script src="mvc/controllers/bingo/BingoController.js"></script>
+	<script src="mvc/data/ParametersData.js"></script>
 	<script>
 
 		function init(){
@@ -21,8 +22,11 @@
 			ss.connect('ws://localhost:2012/');*/
 
 			//prueba 1 -> BingoController y GameTypeController , herencia y funcionamiento general
-			/*var bc = new BingoController("gameConfig", "roundConfig", "callGetCreditsEverySeconds", "callJackpotEverySeconds");
-			bc.stopGetcreditTimer(); //esta ok*/
+			var bc = new BingoController("gameConfig", "roundConfig", "callGetCreditsEverySeconds", "callJackpotEverySeconds");
+			//bc.stopGetcreditTimer(); //esta ok
+			bc.getServer("decoder", "dummyWorker", "forceDummy");
+
+
 		}
 
 

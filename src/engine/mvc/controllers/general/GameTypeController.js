@@ -19,14 +19,16 @@
 
 	function GameTypeController(){}
 
+	
 	GameTypeController.prototype.registerCustomCounters = function (countersController){  //AS3 -> countersController:CountersController
 		_countersController = countersController;
 	}
 
+	/*
 	GameTypeController.prototype.getServer = function(decoder, dummyWorker, forceDummy){  //AS3 -> (decoder:IMessageDecoder, dummyWorker:Object = null, forceDummy:Boolean = true):ServerCommunicationManager
 		console.log("must override this");
 		return null;
-	}
+	}*/
 	
 	GameTypeController.prototype.stopGetcreditTimer = function(){
 		console.log("stopGetcreditTimer");
@@ -39,6 +41,7 @@
 		//_getCreditsTimer.start();
 		//creo que debe de hacerse con por ejemplo: setInterval(function () {alert("Hello")}, aca poner tiempo En milisegundos);
 	}
+
 
 
 	//private functions
