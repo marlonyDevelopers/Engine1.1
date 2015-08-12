@@ -60,11 +60,6 @@
 		console.log('--> onClose ' + event.data);
 	}
 
-	function onDataError(event){
-		console.log('--> onDataError ' + event.data);
-		//dispatchEvent(new ServerResponseEvent(ServerResponseEvent.SERVER_RESPONSE_EVENT, new ConnLostResponse()));
-	}
-
 	function onDataReceivedFromServer(event){ 
 		console.log('--> dataReceived ' + event.data);
 
@@ -74,6 +69,11 @@
 		/*if (_toSend.length > 0 ) {
 			data_send(_toSend.shift(), true);
 		}*/
+	}
+
+	function onDataError(event){
+		console.log('--> onDataError ' + event.data);
+		//dispatchEvent(new ServerResponseEvent(ServerResponseEvent.SERVER_RESPONSE_EVENT, new ConnLostResponse()));
 	}
 
 	function data_send(message, headersReady){
