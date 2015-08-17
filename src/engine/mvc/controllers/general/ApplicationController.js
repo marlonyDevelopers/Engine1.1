@@ -24,7 +24,7 @@
 
 	//static variable
 	var _instance;
-	//static var freePlaySign:freePlayOverlay; //todo
+	ApplicationController.freePlaySign;//static var freePlaySign:freePlayOverlay; //todo
 
 
 	function ApplicationController(canvas, gameName, LanguageXmlEmbed, supportedLanguages, gameConfig, roundConfig, parameters, callGetCreditsEverySeconds, autoPanel, callJackpotEverySeconds){	
@@ -39,10 +39,8 @@
 			ApplicationController.prototype.parameters = parameters;
 		}
 
-
-		
 		gameName   == null ? alert('gameName can not be null') :   _gameName   = gameName;
-		/*gameConfig == null ? alert('gameConfig can not be null') : _gameConfig = gameConfig;
+		gameConfig == null ? alert('gameConfig can not be null') : _gameConfig = gameConfig;
 
 		switch(gameConfig.gameType){
 			case "SLOT":
@@ -52,25 +50,36 @@
 				_gameTypeController = new BingoController(gameConfig, roundConfig, callGetCreditsEverySeconds * 1000, callJackpotEverySeconds * 1000); 
 			break;
 		}	
-		*/
+		_controllers = [];
 	}
 
 
 
 	//public functions
-
+ 
 	ApplicationController.prototype.init = function(){
 		
 		console.log("init");
 
-		/* 
-		AS3 ENGINE:
-		for(var key:String in _controllers){
-				(_controllers[key] as Controller).init();
-			}
-			_initialized = true;
-		sendNotification(EngineNotificationsEnum.INITIALIZATION_COMPLETED_NOTIFICATION);
-		*/
+		for(var key in _controllers){
+			_controllers[key].init();
+		}
+		_initialized = true;
+
+		//TODO
+		//sendNotification(EngineNotificationsEnum.INITIALIZATION_COMPLETED_NOTIFICATION);
+	}
+
+	ApplicationController.prototype.registerController = function(controller){
+		var registered = false;
+		for(var key in _controllers){
+			if(_controllers[key].type == controller.type){
+				registered = true;
+				break;
+			} 
+		}
+
+		(!registered)? _controllers[controller.type] = controller : alert("The controller " + controller.type + " is already registered");
 	}
 
 	ApplicationController.prototype.getGameName = function(){
@@ -89,6 +98,9 @@
 		_gameSessionId = value;
 	}
 	
+	ApplicationController.prototype.getGameTypeController = function(){
+		return _gameTypeController;
+	}
 
 	//public static functions
 
@@ -99,6 +111,7 @@
 			return _instance;
 		}
 	}
+
 
 
 	//private functions

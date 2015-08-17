@@ -2,17 +2,34 @@
 <html>
 <head>
 	<title> Juego Prueba Engine</title>
-	<script src="mvc/controllers/general/ApplicationController.js"></script>
+	
 	<script src="communications/ServerCommunicationManager.js"></script>
 	<script src="communications/server/SocketServer.js"></script>
+
+	<script src="communications/gameType/bingo/BingoGameType.js"></script>
+	
+	<!--mvc folder-->
+	<script src="mvc/controllers/general/ApplicationController.js"></script>
 	<script src="mvc/controllers/general/GameTypeController.js"></script>
+	<script src="mvc/controllers/general/Controller.js"></script>
+
 	<script src="mvc/controllers/bingo/BingoController.js"></script>
+
 	<script src="mvc/data/ParametersData.js"></script>
+
+	<script src="BingoGameConfig.js"></script>  <!--  va para el juego luego  -->
+	<script src="BingoRoundConfig.js"></script>  <!--  va para el juego luego  -->
+
+
 	<script>
 
 		function init(){
 			
-			var _applicationController = new ApplicationController("null", "Show Ball 3");
+			/*var gameConfig = {
+				gameType: "BINGO"
+			}*/
+
+			var _applicationController = new ApplicationController("null", "Show Ball 3", null, null, new BingoGameConfig(), new BingoRoundConfig());
 			console.log("Funciona!");
 
 			/*var scm = new ServerCommunicationManager("provisorio", "provisorio");
@@ -22,10 +39,20 @@
 			ss.connect('ws://localhost:2012/');*/
 
 			//prueba 1 -> BingoController y GameTypeController , herencia y funcionamiento general
-			var bc = new BingoController("gameConfig", "roundConfig", "callGetCreditsEverySeconds", "callJackpotEverySeconds");
+			//var bc = new BingoController("gameConfig", "roundConfig", "callGetCreditsEverySeconds", "callJackpotEverySeconds");
 			//bc.stopGetcreditTimer(); //esta ok
-			bc.getServer("decoder", "dummyWorker", "forceDummy");
+			//bc.getServer("decoder", "dummyWorker", "forceDummy");
 
+			
+			var controller = {};
+			controller.type = "CounterController";
+
+			_applicationController.registerController(controller);
+
+			controller = {};
+			controller.type = "SoundController";
+
+			_applicationController["registerController"](controller);
 
 		}
 
