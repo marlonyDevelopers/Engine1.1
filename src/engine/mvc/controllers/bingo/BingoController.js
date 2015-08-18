@@ -78,8 +78,6 @@
 								_jackpotTimer.start();	
 						}
 					}
-					
-					
 				break;
 				case BingoResponseTypes.GET_EXTRA_BALL:
 					
