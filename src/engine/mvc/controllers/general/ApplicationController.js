@@ -108,66 +108,26 @@
 
 	ApplicationController.prototype.addSubscriber = function(notificationList, subscriber){  //(notificationList:Vector.<String>, subscriber:INotificationReceiver):void{
 		
-
 		for(var i = 0; i < notificationList.length; i++){
-			
 			var tmpVector;
-			
 			if(_notifications.hasOwnProperty(notificationList[i])){
-				console.log("ya tenia " + notificationList[i]);
 				tmpVector = _notifications[notificationList[i]];
 			}else{
-				console.log("agregamos " + notificationList[i]);
 				tmpVector = [];
 				_notifications[notificationList[i]] = tmpVector;
 			}
 
 			tmpVector.push(subscriber);
-
-			/*
-
-			var tmpVector:Vector.<INotificationReceiver>;  lista de subscriptores
-			
-			if(_notifications.hasOwnProperty(notificationList[i])){  pregunta si ya tiene guardada esa notificacion que llego
-				
-				tmpVector = _notifications[notificationList[i]];    si la tiene se queda con el vector de esa notificacion
-			
-			}else{
-				
-				tmpVector = new Vector.<INotificationReceiver>();  no lo tiene  c rea un vector para esa notificacion
-				_notifications[notificationList[i]] = tmpVector;
-			}
-
-			if(tmpVector.indexOf(subscriber) < 0){
-
-				tmpVector.push(subscriber);      agrega el subscriptor a la notificacion
-
-			}*/
 		}
-
-		console.log(".................");
-
 		/*
-		va agregando notificaciones a medida que llegan, controla si ya las tiene
-		para cada indice de _notifications guarda una lista de subscriptores.
-		*/
+		va agregando notificaciones a medida que llegan,si ya la tiene agrega el subscritor a la lista de esa notificacion
+		sino la tiene crea una lista para esa notificacion y agrega al subscritor
+		para cada indice de _notifications guarda una lista de subscriptores.*/
 	}
 
 	ApplicationController.prototype.sendNotification = function(type, data){ //(type:String, data:Object = null):void{
-		
-		console.log("type " + type);
-
 		if(_notifications.hasOwnProperty(type)){
-
 			var subscribers = _notifications[type];
-			console.log("length " + subscribers.length);
-			
-
-			console.log("subscribers " + subscribers[0]);
-			console.log("subscribers " + subscribers[1]);
-
-
-
 			for(var i = 0; i < subscribers.length; i++){
 				if(subscribers[i].notificationReceived){
 					subscribers[i].notificationReceived(type, data);
@@ -175,9 +135,6 @@
 					alert("All subscribers need to implement notificationReceived public function");
 				}
 			}
-
-
-
 		}
 	}
 
