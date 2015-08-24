@@ -33,15 +33,30 @@
 		*/
 	}
 
+	BingoGameType.prototype.sendMessageDelegate =  function (delegate){   //(delegate:Function):void{
+		_sendDelegate = delegate;
+	}
 
-
+	BingoGameType.prototype.login = function(gameName, password){  //(gameName:String, password:String):void{
+		sendToServer("L:" + gameName + ":" + password);
+	}
+	
+	BingoGameType.prototype.initialization = function(){
+		sendToServer("I");
+	}
 
 
 
 	//private functions
 
 
-
+	function sendToServer(message){ //(message:String):void{
+		if(_sendDelegate == null){
+			alert("You must set the send function delegate");
+		}else{
+			_sendDelegate(message);
+		}
+	}
 
 
 

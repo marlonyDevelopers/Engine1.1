@@ -31,7 +31,8 @@
 		//_toSend   = new Vector.<String>();
 		_received = true;
 		_this     = this;
-		//_gameType.sendMessageDelegate(data_send); 
+		_gameType.sendMessageDelegate(data_send); 
+
 		//addEventListener(Event.ENTER_FRAME, checkForUserActivity);
 	}
 

@@ -9,9 +9,9 @@
 	var _gameSessionId;
 
 	var _canvas;
-	var _controllers      //Dictionary
-	var _applicationViews;//Dictionary
-	var _notifications    //Dictionary
+	var _controllers             //Dictionary
+	var _applicationViews;       //Dictionary
+	var _notifications           //Dictionary
 	var _notificationsSubscribers//Vector.<INotificationReceiver>
 
 	var _currentApplicationView  //String
@@ -70,8 +70,7 @@
 		}
 		_initialized = true;
 
-		//TODO
-		//sendNotification(EngineNotificationsEnum.INITIALIZATION_COMPLETED_NOTIFICATION);
+		sendNotification(EngineNotificationsEnum.INITIALIZATION_COMPLETED_NOTIFICATION);
 	}
 
 	ApplicationController.prototype.registerController = function(controller){
@@ -136,6 +135,12 @@
 				}
 			}
 		}
+	}
+
+	ApplicationController.prototype.getServer = function (decoder, dummyWorker, forceDummy){    //(decoder:IMessageDecoder, dummyWorker:Object = null, forceDummy:Boolean = true):ServerCommunicationManager{
+		console.log("getServer - ApplicationController");
+		console.log(_gameTypeController);s
+		return _gameTypeController.getServer(decoder, dummyWorker, forceDummy);
 	}
 
 

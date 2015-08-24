@@ -32,7 +32,9 @@
 				//_server = new ServerCommunicationManager(new BingoGameType(gameConfig as BingoGameConfig, decoder as BingoMessageDecoder), iServer);
 				
 			}else{
-				_server = new ServerCommunicationManager(new BingoGameType(gameConfig, decoder), new SocketServer());  //_server = new ServerCommunicationManager(new BingoGameType(gameConfig as BingoGameConfig, decoder as BingoMessageDecoder), new SocketServer(null));
+				soketServer = new SocketServer();
+				_server     = new ServerCommunicationManager(new BingoGameType(gameConfig, decoder), soketServer);  //_server = new ServerCommunicationManager(new BingoGameType(gameConfig as BingoGameConfig, decoder as BingoMessageDecoder), new SocketServer(null));
+				soketServer.setMyCommunicationManager(_server);
 			}
 
 			//_server.addEventListener(ServerResponseEvent.SERVER_RESPONSE_EVENT, onServerResponse); //TODO custom event

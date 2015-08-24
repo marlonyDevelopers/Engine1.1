@@ -4,6 +4,7 @@
 	//private variables
 
 	var _ws;
+	var _myCommunicationManager
 
 
 	//public functions
@@ -21,6 +22,11 @@
 		}catch(error) {
 			alert(error.message);
 		}
+	}
+
+	SocketServer.prototype.setMyCommunicationManager = function(myCommunicationManager){
+		console.log("setMyCommunicationManager");
+		_myCommunicationManager = myCommunicationManager;
 	}
 	
 	SocketServer.prototype.send = function(message){
@@ -45,6 +51,7 @@
 	
 	function onDataReceivedFromServer(event){
 		console.log('--> dataReceived ' + event.data);
+		_myCommunicationManager.onDataReceivedFromServer(event);
 		//dispatchEvent(event);
 	}
 	
