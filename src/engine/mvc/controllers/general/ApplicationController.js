@@ -54,6 +54,7 @@
 
 		_controllers              = [];
 		_notifications            = [];
+		_applicationViews         = [];
 		_notificationsSubscribers = [];
 	}
 
@@ -81,9 +82,27 @@
 				break;
 			} 
 		}
-
 		(!registered)? _controllers[controller.type] = controller : alert("The controller " + controller.type + " is already registered");
 	}
+
+
+	ApplicationController.prototype.registerApplicationView = function(applicationView){  //(applicationView:IApplicationView):void{
+		//controla que tenga los metodos 
+		if(!applicationView.onShow || !applicationView.onHide){
+			alert("The applicationView needs 'onShow' and 'onHide' functions");
+		}
+		//controla que tenga la propiedad type
+		if(applicationView.type == ""){
+			alert("The applicationView needs 'type' propertie");
+		}
+		//controla si ya esta registrada
+		if(_applicationViews.hasOwnProperty(applicationView.type)){
+			alert("The applicationView is already registered");
+		}else{
+			_applicationViews[applicationView.type] = applicationView;
+		}
+	}
+
 
 	ApplicationController.prototype.getGameName = function(){
 		return _gameName;
@@ -139,7 +158,7 @@
 
 	ApplicationController.prototype.getServer = function (decoder, dummyWorker, forceDummy){    //(decoder:IMessageDecoder, dummyWorker:Object = null, forceDummy:Boolean = true):ServerCommunicationManager{
 		console.log("getServer - ApplicationController");
-		console.log(_gameTypeController);s
+		console.log(_gameTypeController);
 		return _gameTypeController.getServer(decoder, dummyWorker, forceDummy);
 	}
 
