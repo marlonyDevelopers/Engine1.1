@@ -26,9 +26,9 @@
 
 
 	function ServerCommunicationManager(gameType, server){
-		_gameType = gameType;
+		_gameType = ServerCommunicationManager.prototype.gameType = gameType;
 		_server   = server;
-		//_toSend   = new Vector.<String>();
+		_toSend   = [];
 		_received = true;
 		_this     = this;
 		_gameType.sendMessageDelegate(data_send); 
@@ -40,39 +40,57 @@
     //public functions
 
 	ServerCommunicationManager.prototype.connect = function(serverIP){ // as3 -> serverIP, serverPort
-		_ws = new WebSocket(serverIP); 
+		/*_ws = new WebSocket(serverIP); 
 		_ws.onopen    = function(event) { onConectionOk(event) }; 
 		_ws.onclose   = function(event) { onClose(event) }; 
 		_ws.onmessage = function(event) { onDataReceivedFromServer(event) }; 
-		_ws.onerror   = function(event) { onDataError(event) };
+		_ws.onerror   = function(event) { onDataError(event) };*/
+		
+		_server.connect(serverIP);
 	}
 
 
 	//private functions
 
-	function onConectionOk(event){
-		console.log('--> onConectionOk ' + event.data);
-		//dispatchEvent(new Event(CONNECTION_OK_EVENT));
-
-		//_ws.send("hola");  //TO TEST
+	
+	ServerCommunicationManager.prototype.onConectionOk = function(){
+		console.log('--> onConectionOk (ServerCommunicationManager)');
+    	window.dispatchEvent(new CustomEvent("CONNECTION_OK"));
+		//_ws.send("hola soy el serverCommunicationManager");  //TO TEST
 	}
 
-	function onClose(event){ //no estaba en AS3
+	
+	ServerCommunicationManager.prototype.onClose = function(){ //no estaba en AS3
 		console.log('--> onClose ' + event.data);
 	}
 
-	function onDataReceivedFromServer(event){ 
+	ServerCommunicationManager.prototype.onDataReceivedFromServer = function(){ 
 		console.log('--> dataReceived ' + event.data);
 
-		//var serverMessage:BaseResponse = _gameType.serverMessageToArray(event.data);
-		//sendServerResponseToClient(serverMessage);
+		var serverMessage = _gameType.serverMessageToArray(event.data); //devuelve a BaseResponse
+		
+		sendServerResponseToClient(serverMessage);
+
+
 		_received = true;
 		/*if (_toSend.length > 0 ) {
 			data_send(_toSend.shift(), true);
 		}*/
 	}
 
-	function onDataError(event){
+
+
+
+
+	function sendServerResponseToClient(data):void{
+		window.dispatchEvent(new CustomEvent("SERVER_RESPONSE_EVENT", data));
+	}
+
+
+
+
+
+	ServerCommunicationManager.prototype.onDataError = function(){
 		console.log('--> onDataError ' + event.data);
 		//dispatchEvent(new ServerResponseEvent(ServerResponseEvent.SERVER_RESPONSE_EVENT, new ConnLostResponse()));
 	}

@@ -40,6 +40,7 @@
 			ApplicationController.prototype.parameters = parameters;
 		}
 
+		_canvas    = canvas;
 		gameName   == null ? alert('gameName can not be null') :   _gameName   = gameName;
 		gameConfig == null ? alert('gameConfig can not be null') : _gameConfig = gameConfig;
 
@@ -71,7 +72,7 @@
 		}
 		_initialized = true;
 
-		sendNotification(EngineNotificationsEnum.INITIALIZATION_COMPLETED_NOTIFICATION);
+		ApplicationController.prototype.sendNotification(EngineNotificationsEnum.INITIALIZATION_COMPLETED_NOTIFICATION);
 	}
 
 	ApplicationController.prototype.registerController = function(controller){
@@ -87,6 +88,7 @@
 
 
 	ApplicationController.prototype.registerApplicationView = function(applicationView){  //(applicationView:IApplicationView):void{
+
 		//controla que tenga los metodos 
 		if(!applicationView.onShow || !applicationView.onHide){
 			alert("The applicationView needs 'onShow' and 'onHide' functions");
@@ -97,7 +99,7 @@
 		}
 		//controla si ya esta registrada
 		if(_applicationViews.hasOwnProperty(applicationView.type)){
-			alert("The applicationView is already registered");
+			alert(applicationView.type + "  (applicationView) is already registered");
 		}else{
 			_applicationViews[applicationView.type] = applicationView;
 		}
@@ -122,6 +124,40 @@
 	
 	ApplicationController.prototype.getGameTypeController = function(){
 		return _gameTypeController;
+	}
+
+	ApplicationController.prototype.showApplicationView = function(type){
+		if(_initialized){
+			if(!_applicationViews.hasOwnProperty(type)){
+				alert("The ApplicationView of type: " + type + " is not registered");
+			}
+			
+			//TODO:
+			if(_canvas.children.length > 0){
+				for(var i = 0; i < _canvas.children.length; i++){
+					_canvas.Remove(_canvas.children[0]);
+				}
+			}
+
+			_currentApplicationView = type;
+			
+			_canvas.add(_applicationViews[type].getView());
+			_applicationViews[type].onShow();
+			
+			//_applicationViews[type].start();
+			
+			/*
+			if((_applicationViews[type] as IApplicationView).isGameView()){
+				if(parameters.is_log){
+					(_applicationViews[type] as IApplicationView).showLogScreen(parameters.logData);
+				}
+			}
+			*/
+
+			ApplicationController.prototype.sendNotification(EngineNotificationsEnum.APPLICATIONVIEW_CHANGED_NOTIFICATION);
+		}else{
+			alert("You MUST call ApplicationController::init after you've registered all you Controllers");
+		}
 	}
 
 	ApplicationController.prototype.addSubscriber = function(notificationList, subscriber){  //(notificationList:Vector.<String>, subscriber:INotificationReceiver):void{
@@ -157,8 +193,6 @@
 	}
 
 	ApplicationController.prototype.getServer = function (decoder, dummyWorker, forceDummy){    //(decoder:IMessageDecoder, dummyWorker:Object = null, forceDummy:Boolean = true):ServerCommunicationManager{
-		console.log("getServer - ApplicationController");
-		console.log(_gameTypeController);
 		return _gameTypeController.getServer(decoder, dummyWorker, forceDummy);
 	}
 
@@ -172,9 +206,6 @@
 			return _instance;
 		}
 	}
-
-
-
 
 	//private functions
 

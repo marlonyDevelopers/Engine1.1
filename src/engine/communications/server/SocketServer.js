@@ -12,7 +12,6 @@
 	function SocketServer(){}
 
 	SocketServer.prototype.connect = function(host){  // AS3 -> host:String, port:int
-		
 		try {
 			_ws = new WebSocket(host); 
 			_ws.onopen    = function(event) { onConectionOk(event) }; 
@@ -38,15 +37,14 @@
 	
 
 	function onConectionOk(event){
-		console.log('--> onConectionOk ' + event.data);
+		console.log('--> onConectionOk (SocketServer)');
 		//dispatchEvent(event);
-
-		//SocketServer.prototype.send("hola");  //TO TEST
+		_myCommunicationManager.onConectionOk();
 	}
 
 	function onClose(event){
 		console.log('--> onClose ' + event.data);
-		//dispatchEvent(event);
+		_myCommunicationManager.onClose();
 	}
 	
 	function onDataReceivedFromServer(event){
