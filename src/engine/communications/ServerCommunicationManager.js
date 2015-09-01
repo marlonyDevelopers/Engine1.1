@@ -64,15 +64,15 @@
 		console.log('--> onClose ' + event.data);
 	}
 
-	ServerCommunicationManager.prototype.onDataReceivedFromServer = function(){ 
-		console.log('--> dataReceived ' + event.data);
-
+	ServerCommunicationManager.prototype.onDataReceivedFromServer = function(event){ 
+		console.log('<-- dataReceived ' + event.data);
+		_received = true;
 		var serverMessage = _gameType.serverMessageToArray(event.data); //devuelve a BaseResponse
 		
 		sendServerResponseToClient(serverMessage);
 
 
-		_received = true;
+		
 		/*if (_toSend.length > 0 ) {
 			data_send(_toSend.shift(), true);
 		}*/
@@ -82,8 +82,8 @@
 
 
 
-	function sendServerResponseToClient(data):void{
-		window.dispatchEvent(new CustomEvent("SERVER_RESPONSE_EVENT", data));
+	function sendServerResponseToClient(data){
+		window.dispatchEvent(new CustomEvent("SERVER_RESPONSE_EVENT", {detail:data}));
 	}
 
 

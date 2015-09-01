@@ -85,6 +85,12 @@
 		return decodeServerMessage(vMessage[0]);
 	}
 
+	BingoGameType.prototype.setCards = function(value){ //(value:Vector.<BingoCardsData>):void{
+		for(var i = 0; i < _cards.length; i++){
+			value[i].enabled = _cards[i].enabled;
+		}
+		_cards = value;
+	}
 
 	function decodeServerMessage(message){  //message:Array):BaseResponse
 		return _decoder.decodeServerMessage(message);

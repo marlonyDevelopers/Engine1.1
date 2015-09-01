@@ -135,7 +135,7 @@
 			//TODO:
 			if(_canvas.children.length > 0){
 				for(var i = 0; i < _canvas.children.length; i++){
-					_canvas.Remove(_canvas.children[0]);
+					_canvas.remove(_canvas.children[0]);
 				}
 			}
 

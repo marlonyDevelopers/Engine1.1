@@ -42,10 +42,16 @@
 			return _server; 
 		}
 
+		window.addEventListener("SERVER_RESPONSE_EVENT", onServerResponse);
 	}
 
 	function onServerResponse(event){ 
-		/*if(event.response && event.response.type){
+
+
+		var response = event.detail;
+		if(response && response.type){
+
+			/*
 			switch(event.response.type){
 				case BingoResponseTypes.PLAY:
 					var playResponse:PlayResponse = event.response as PlayResponse;
@@ -156,8 +162,8 @@
 					_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (jackpotShowResponse.credits_in_cash));
 					
 				break;
-			}
-		}*/
+			}*/
+		}
 	}
 
 

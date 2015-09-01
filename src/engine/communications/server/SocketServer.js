@@ -24,7 +24,6 @@
 	}
 
 	SocketServer.prototype.setMyCommunicationManager = function(myCommunicationManager){
-		console.log("setMyCommunicationManager");
 		_myCommunicationManager = myCommunicationManager;
 	}
 	
@@ -48,7 +47,7 @@
 	}
 	
 	function onDataReceivedFromServer(event){
-		console.log('--> dataReceived ' + event.data);
+		//console.log('<-- dataReceived ' + event.data);
 		_myCommunicationManager.onDataReceivedFromServer(event);
 		//dispatchEvent(event);
 	}
