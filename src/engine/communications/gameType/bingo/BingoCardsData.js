@@ -16,10 +16,20 @@
 			var _numbers = stringOfNumbers.split(separator);
 
 			for(var i = 0; i < _numbers.length; i++){
-				_this.numbers.push(_numbers[i]);
+				_this.numbers.push(parseInt(_numbers[i]));
 				var box = new CardBox(_numbers[i], _this.setChanged); //:CardBox 
 				_this.boxes.push(box);
 			}
+
+			/*
+			if(separator == null) separator = ";";
+			_this.numbers = stringOfNumbers.split(separator);
+
+			for(var i = 0; i < _this.numbers.length; i++){
+				//_this.numbers.push(_numbers[i]);
+				var box = new CardBox(_this.numbers[i], _this.setChanged); //:CardBox 
+				_this.boxes.push(box);
+			}*/
 		}
 
 		this.setChanged = function(value){

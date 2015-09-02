@@ -86,6 +86,13 @@
 		(!registered)? _controllers[controller.type] = controller : alert("The controller " + controller.type + " is already registered");
 	}
 
+	ApplicationController.prototype.getController = function(controllerType){  //(controllerType:Class):Controller{
+		if(!_controllers.hasOwnProperty(controllerType)){
+			alert("The controller of type: " + type + " is not registered");
+			return null;
+		}
+		return _controllers[controllerType];
+	}
 
 	ApplicationController.prototype.registerApplicationView = function(applicationView){  //(applicationView:IApplicationView):void{
 
