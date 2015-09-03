@@ -1,11 +1,7 @@
 (function(window){
 
-	var _this;	
-
-
-	
 	function CardBox(number, parentChangeFunction){
-		_this = this;
+		var _this = this;
 
 		this.changed = false;
 	    this.number  = number;
@@ -43,5 +39,6 @@
 
 	//to global scope access:
 	window.CardBox = CardBox;
+	window.Almost  = Almost;
 
 }(window));

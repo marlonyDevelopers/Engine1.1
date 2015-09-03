@@ -2,9 +2,9 @@
 
 	//public variables
 
-	Controller.prototype._type;  //:String;
+/*	Controller.prototype._type;  //:String;
 	Controller.prototype._model; //:Model;
-	Controller.prototype._view;  //:IView;
+	Controller.prototype._view;  //:IView;*/
 
 	//private variables
 
@@ -34,6 +34,7 @@
 		}*/
 	}
 
+/*
 	Controller.prototype.model = function(){
 		return Controller.prototype._model;
 	}
@@ -48,7 +49,7 @@
 
 	Controller.prototype.type = function(value){
 		Controller.prototype._type = value;
-	}
+	}*/
 
 
 	//to global scope access:

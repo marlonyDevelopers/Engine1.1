@@ -1,9 +1,7 @@
 (function(window){
 
-	var _this;	
-
 	function BingoCardsData(){
-		_this = this;
+		var _this = this;
 		this.enabled;
 		this.changed  = false;
 		this.totalWin = 0;
