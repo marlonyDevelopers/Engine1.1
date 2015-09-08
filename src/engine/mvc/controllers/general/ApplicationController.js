@@ -43,6 +43,11 @@
 		gameName   == null ? alert('gameName can not be null') :   _gameName   = gameName;
 		gameConfig == null ? alert('gameConfig can not be null') : _gameConfig = gameConfig;
 
+		/*
+		freePlaySign = new freePlayOverlay();
+		_gameName = gameName;
+		_gameSessionId = this.parameters.session;*/
+
 		switch(gameConfig.gameType){
 			case "SLOT":
 				_gameTypeController = new SlotController(gameConfig, roundConfig, callGetCreditsEverySeconds * 1000);
@@ -56,6 +61,33 @@
 		_notifications            = [];
 		_applicationViews         = [];
 		_notificationsSubscribers = [];
+
+		/*
+		var translatorController:TranslatorController = new TranslatorController(LanguageXmlEmbed, supportedLanguages, this.parameters.language); 
+		translatorController.setupSubscriptions();*/	
+		
+		_countersController = new CountersController(new CountersModel());
+		_countersController.registerCounter(CountersController.CREDITS_IN_CASH_COUNTER);
+		_countersController.registerCounter(CountersController.TOTALBET_IN_CASH_COUNTER);
+		_countersController.registerCounter(CountersController.WIN_IN_CASH_COUNTER);
+		_countersController.registerCounter(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER);
+		_countersController.registerCounter(CountersController.BET_COUNTER);
+		_countersController.registerCounter(CountersController.WIN_COUNTER);
+		_countersController.registerCounter(CountersController.JACKPOT_COUNTER);
+		_countersController.registerCounter(CountersController.JACKPOT_COUNTER_VECTOR);
+		_countersController.registerCounter(CountersController.COIN_COUNTER);
+		_countersController.registerCounter(CountersController.CREDITS_COUNTER);
+		_countersController.registerCounter(CountersController.TOTAL_BET_COUNTER);
+		_countersController.registerCounter(CountersController.AUTOPLAYS_COUNTER);
+		_countersController.registerCounter(CountersController.TOTALEXTRA_IN_CASH_COUNTER);
+		_countersController.registerCounter(CountersController.TOTALAPUESTA_IN_CASH_COUNTER);
+		_countersController.registerCounter(CountersController.SPECIAL_VALUE_COUNTER);
+		_countersController.registerCounter(CountersController.SLOT_LINES_ON_COUNTER);
+		_countersController.registerCounter(CountersController.DOUBLE_UP_COUNTER);
+
+
+
+
 
 
 
@@ -235,6 +267,26 @@
 			_this.parameters.session  = window.session;
 			_this.parameters.routes   = window.routes;
 		}
+
+
+		this.registerController(_countersController);
+		_gameTypeController.registerCustomCounters(_countersController);
+
+		/*
+		
+		
+		_soundController = new SoundController();
+		registerController(_soundController);
+		
+		registerController(translatorController);
+		
+		if(gameConfig.useStandardBar){
+			var _stardardBarController:StandardBarController = new StandardBarController(autoPanel);
+			registerController(_stardardBarController);
+		
+		_soundController.addSound(new GameSound('standardClickSnd', new standardClick()));
+		}
+		*/
 	}
 
 

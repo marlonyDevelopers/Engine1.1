@@ -126,6 +126,16 @@
 			return response;
 		}
 
+		function decodeGetCreditsResponse(message){
+			var response  = {};
+			response.type = "GetCreditsResponse";
+
+			response.credits         = message[2] / game.coin;
+			response.credits_in_cash = (parseInt(message[2]))/100;
+			response.jackpot         = message[3]/100;
+			response.specialValue    = message[4]/100;
+			return response;
+		}
 
 		function countOpenCards(cards){
 			var openCards = 0;
@@ -136,6 +146,8 @@
 			}
 			return openCards;
 		}
+
+
 
 	}
 

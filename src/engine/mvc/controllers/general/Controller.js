@@ -1,25 +1,25 @@
 (function(window){
 
-	//public variables
 
-/*	Controller.prototype._type;  //:String;
-	Controller.prototype._model; //:Model;
-	Controller.prototype._view;  //:IView;*/
+	Controller.prototype.model;
+	Controller.prototype.view;
+	Controller.prototype.type;
 
 	//private variables
 
 	var _dependencies = [];  //:Vector.<Class>;
 
 	//type en el Engine en as3 se sacaba automatico del nombre de la clase...
-	function Controller(type,view, model, dependencies){ //view:IView, model:Model, dependencies:Vector.<Class> = null
+	function Controller(){ //view:IView, model:Model, dependencies:Vector.<Class> = null
 
-		Controller.prototype._type  = type;
-		Controller.prototype._model = model;
-		Controller.prototype._view  = view;
+		//nadie hace new de Conrtoller, solo importa prototype
+
 		_dependencies = dependencies;
 
 		if(_view != null)  { _view.setController(this); }
 		if(_model != null) { _model.setController(this);}
+
+
 	}
 
 	//TODO
@@ -34,22 +34,9 @@
 		}*/
 	}
 
-/*
-	Controller.prototype.model = function(){
-		return Controller.prototype._model;
-	}
 
-	Controller.prototype.view = function(){
-		return Controller.prototype._view;
-	}
 
-	Controller.prototype.type = function(){
-		return Controller.prototype._type;
-	}
 
-	Controller.prototype.type = function(value){
-		Controller.prototype._type = value;
-	}*/
 
 
 	//to global scope access:
