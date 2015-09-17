@@ -1,18 +1,15 @@
 (function(window){
 
-
-
-
 	//public functions
 
 	function BingoGameType(gameConfig, decoder){   //(gameConfig:BingoGameConfig, decoder:BingoMessageDecoder = null, responseDelay:Number = .2)
 
 		var _this = this;
-		var _sendDelegate; //:Function = null;
-		var _decoder;//:BingoMessageDecoder;
+		var _sendDelegate;      //:Function = null;
+		var _decoder;           //:BingoMessageDecoder;
 		var _countersController;//:CountersController;
-		var _openCards = 4;
-		var _cards     = []; //new Vector.<BingoCardsData>();
+		var _openCards  = 4;
+		var _cards      = []; //new Vector.<BingoCardsData>();
 		
 		this.coin       = 0;
 		this.bet        = 0;
@@ -33,8 +30,8 @@
 				}
 			}
 			_openCards = aux;
-			_countersController = ApplicationController.getApplicationController().getController(CountersController);
 			*/
+			_countersController = ApplicationController.getApplicationController().getController("CountersController");
 		}
 
 		this.sendMessageDelegate =  function (delegate){   //(delegate:Function):void{
@@ -103,7 +100,8 @@
 		 * Send the play (W) message to the server
 		 */
 		this.Play = function(){
-			_countersController.setCounterValue(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER, 0);
+			alert("BingoGameType - Engine - Play ->  TODO: _countersController.setCounterValue(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER, 0);");
+			//_countersController.setCounterValue(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER, 0);
 			var playCost = _openCards * _this.bet;
 			if(checkCredits(playCost, false)){
 				sendToServer("W");
@@ -226,12 +224,10 @@
 			}
 		}
 
+
 		/*
-
-		TODO:
-
-		public function checkCreditsNormalsPlay():Boolean{
-			var playCost:int = _openCards * bet;
+		function checkCreditsNormalsPlay(){
+			var playCost = _openCards * bet;
 			if(checkCredits(playCost, false)){
 				return true;
 			}else{
@@ -239,23 +235,24 @@
 			}
 		}
 		
-		public function checkCreditsExtra():Boolean{
+		function checkCreditsExtra(){
 			if(checkCredits(_decoder.getNextExtraCost(), gameConfig.useWonCreditsToPlay)){
 				return true;
 			}else{
 				return false;
 			}
-		}
+		}*/
 		
-		private function checkCredits(playCost:int, tryToUseWonCreditsIfSupported:Boolean):Boolean{
-			if((ApplicationController.getApplicationController().gameType.roundConfig as BingoRoundConfig).isFreePlayActivated){ return true; }
-			if((ApplicationController.getApplicationController().parameters.is_log)){ return true; }
+		function checkCredits(playCost, tryToUseWonCreditsIfSupported){  //(playCost:int, tryToUseWonCreditsIfSupported:Boolean):Boolean{
+
+			if(ApplicationController.getApplicationController().gameType.roundConfig.isFreePlayActivated){ return true; }
+			if(ApplicationController.getApplicationController().parameters.is_log){ return true; }
 			
-			var creditsInCash:Number      = _countersController.getCounterValue(CountersController.CREDITS_IN_CASH_COUNTER);
-			var coin:Number               = _countersController.getCounterValue(CountersController.COIN_COUNTER);
-			var coinDivisor:int           = coin < 1 ? 1:100 //ej: hay juegos que tratan ya 0.25 la moneda, y la mayoria con 25
-			var playCostInCash:Number     = playCost * (coin/coinDivisor);
-			var creditsAfterInCash:Number = creditsInCash - playCostInCash;
+			var creditsInCash      = _countersController.getCounterValue(CountersController.CREDITS_IN_CASH_COUNTER);
+			var coin               = _countersController.getCounterValue(CountersController.COIN_COUNTER);
+			var coinDivisor        = coin < 1 ? 1:100 //ej: hay juegos que tratan ya 0.25 la moneda, y la mayoria con 25
+			var playCostInCash     = playCost * (coin/coinDivisor);
+			var creditsAfterInCash = creditsInCash - playCostInCash;
 
 			if(creditsAfterInCash < 0){
 				if(tryToUseWonCreditsIfSupported && gameConfig.useWonCreditsToPlay){
@@ -267,20 +264,24 @@
 			return true;
 		}
 		
-		public function noMoreCredits():void{
+		function noMoreCredits(){
 			ApplicationController.getApplicationController().startTimerGC();
 			ApplicationController.getApplicationController().sendNotification(EngineNotificationsEnum.NO_MORE_CREDITS_NOTIFICATION);
-			
-			var standardBarController:StandardBarController = ApplicationController.getApplicationController().getController(StandardBarController) as StandardBarController;
+
+			alert("BingoGameType - Engine - noMoreCredits ->  TODO: standardBarController");
+			/*
+			var standardBarController = ApplicationController.getApplicationController().getController("StandardBarController");
 			if(standardBarController.isAutoOn){
 				standardBarController.autoOff();
-			}
+			}*/
 		}
 
-		public function get cards():Vector.<BingoCardsData>
-		{
-			return _cards;
-		}
+		this.cards = _cards
+
+		/*
+
+		TODO:
+
 		
 		internal function setCards(value:Vector.<BingoCardsData>):void{
 			for(var i:int = 0; i < _cards.length; i++){

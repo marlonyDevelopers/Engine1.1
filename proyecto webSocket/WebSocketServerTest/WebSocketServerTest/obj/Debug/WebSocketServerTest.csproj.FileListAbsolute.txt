@@ -1,0 +1,38 @@
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.exe.config
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.exe
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.pdb
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\log4net.dll
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\Newtonsoft.Json.dll
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.Common.dll
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketBase.dll
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketEngine.dll
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.dll
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\log4net.xml
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\Newtonsoft.Json.xml
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.Common.pdb
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketBase.pdb
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketEngine.pdb
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.pdb
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.xml
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.csprojResolveAssemblyReference.cache
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.exe
+D:\Laboral\Marlony\Codigo\SVN\WebSocketServerTest\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.exe.config
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.exe
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.exe
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\log4net.dll
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.Common.dll
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketBase.dll
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketEngine.dll
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.dll
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\log4net.xml
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.Common.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketBase.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperSocket.SocketEngine.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.pdb
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.xml
+C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.csprojResolveAssemblyReference.cache

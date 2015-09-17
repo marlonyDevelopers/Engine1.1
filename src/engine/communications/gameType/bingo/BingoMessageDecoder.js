@@ -126,6 +126,173 @@
 			return response;
 		}
 
+
+		function decodeChangeCardNumbersMessage(message){
+			console.log('--> ChangeCardNumbers '+ message.toString());
+			var response  = {};
+			response.type = "ChangeCardNumbersResponse";
+			
+			response.cards = [];
+			var cards = message.length;
+			
+			for(var i = 2; i < cards; i++){
+				var card = new BingoCardsData();
+				card.addNumbersFromString(message[i]);
+				response.cards.push(card);
+			}
+			game.setCards(response.cards);
+			return response;
+		}
+
+
+
+		function decodePlayResponse(message){
+			
+			if(game.gameConfig.loadCardsStateDuringPlay) duringPlayLoader.reset(); 
+			
+			for(var i = 0; i < game.cards.length; i++){
+				game.cards[i].reset();
+			}
+			currentExtraPosition = 1;
+
+
+			var response  = {};
+			response.type = "PlayResponse";
+			
+			response.credits         = message[2] / game.coin;
+			response.credits_in_cash = (parseInt(message[2])) / 100;
+			lastWin = response.win   = message[3];
+			response.win_in_cash     = response.win * (game.coin/100);
+			response.jackpot         = message[4]/100;
+			if(message[13] > 0){
+				response.toPayJackpot      = true;
+				response.toPayJackpotValue = message[13];
+			}
+			response.bonusData      = message[9];
+			response.bonusExtraData = message[10];  //nombre protocolo: Bonus Data Position
+			response.bonusData2     = message[14];
+			response.hasExtra       = (message[6] == "0") ? false : true;
+			response.extraCost      = message[7]; 
+			
+			response.freeExtraPos   = [];
+			var freeExtra = message[8].split(";");
+			for(i = 0; i < freeExtra.length; i++){
+				response.freeExtraPos.push(freeExtra[i]);
+			}
+			
+			response.specialValue = message[15]/100;
+			nextExtraCost         = response.extraCost;
+			var drawnBalls        = message[5].split(";");
+			response.drawnBalls   = [];
+			for(i = 0; i < drawnBalls.length; i++){
+				response.drawnBalls.push(drawnBalls[i]);
+				tryToMarkNumber(drawnBalls[i], response);
+			}
+			
+			/*var winPaid:Array     = JSON.parse(message[11]) as Array;
+			response.winPaid      = processWinPaidArray(winPaid);
+
+			var willPayList:Array = JSON.parse(message[12]) as Array;
+			response.willPay      = processWillPayArray(willPayList);*/
+
+			response.cardsData    = game.cards;
+
+			//to print duringPLayData -> printDuringPlayData = 1 in game bingoGameConfig.js
+			if(game.gameConfig.loadCardsStateDuringPlay && game.gameConfig.printDuringPlayData) duringPlayLoader.printDuringPLayData(response);
+			
+			return response;
+		}
+
+		function tryToMarkNumber(number, response){  //(number:int, response:PlayResponse = null):void{
+			for(var i = 0; i < game.cards.length; i++){
+				if(game.cards[i].enabled){
+					for(var j = 0; j < game.cards[i].numbers.length; j++){
+						if(game.cards[i].enabled && game.cards[i].numbers[j] == number){
+							game.cards[i].boxes[j].setMarked(true);
+							if(game.gameConfig.loadCardsStateDuringPlay && response.type == "PlayResponse"){
+
+								duringPlayLoader.loadCurrentBallData(number, i, j, response);
+							}
+							break;
+						}
+					}
+				}
+			}
+		}
+
+		function processWinPaidArray(winPaid){  //(winPaid:Array):Vector.<WinPrizes>{
+			var list = [];
+			for(var i = 0; i < winPaid.length; i++){
+
+				var win = new WinPrizes(i);
+				var hasWonSomething = false;
+				
+				if(game.cards[i].hasChanged){
+					game.cards[i].setTotalWin(0);
+				}
+				
+				for(var j = 0; j < winPaid[i].length; j++){
+					hasWonSomething = true;
+					var prizeIndex  = winPaid[i][j];
+					
+					var prize       = new Prize();
+					prize.index     = prizeIndex;
+					prize.name      = game.gameConfig.prizes[prizeIndex].name;
+					
+					win.prizesIndexes.push(prizeIndex);
+					win.prizes.push(prize);
+					
+					if(game.cards[i].enabled){
+						if(game.cards[i].hasChanged){
+							game.cards[i].addWin(game.gameConfig.prizes[prizeIndex].pay * game.bet);
+						}
+					}
+					
+				}
+				if(hasWonSomething){ list.push(win); }
+			}
+			return list;
+		}
+
+		function processWillPayArray(willPayList){  //(willPayList:Array):Vector.<WillPay>{
+			var list = [];
+			for(var i = 0; i < willPayList.length; i++){
+				if(willPayList[i].length == 4){
+					var willPay = new WillPay(willPayList[i][0], willPayList[i][1], willPayList[i][2]);
+					for(var j = 0; j < willPayList[i][3].length; j++){
+						willPay.prizeIndexList.push(willPayList[i][3][j]);
+						//new:
+						willPay.boxTotalWin += ApplicationController.getApplicationController().gameConfig.prizes[willPayList[i][3][j]].pay * game.bet;
+					}
+					if(willPay.prizeIndexList.length > 0){
+						list.push(willPay);
+						var box     = game.cards[willPay.card].boxes[getIndexByColAndRow(willPay.column, willPay.line, game.gameConfig.cardsSize.x)];
+						var changed = false;
+						for(var x = 0; x < willPay.prizeIndexList.length; x++){
+							var index = willPay.prizeIndexList[x];
+							if(!box.hasAlmost(index)){
+								changed = true;
+								box.addAlmost(index, game.gameConfig.prizes[index].pay * game.bet);
+							}
+						}
+						if(!changed){
+							box.changed(false);
+						}
+					}
+				}
+			}
+			return list;
+		}
+		
+		function getIndexByColAndRow(column, row, totalColumns){  //(column:int, row:int, totalColumns:int):int{
+			var pos = column + (row * totalColumns);
+			return pos;
+		}
+
+
+
+
+
 		function decodeGetCreditsResponse(message){
 			var response  = {};
 			response.type = "GetCreditsResponse";

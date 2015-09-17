@@ -19,6 +19,8 @@
 		_gameType.sendMessageDelegate(data_send); 
 
 
+		this.gameType = _gameType;
+
 		// public functions
 
 		this.checkForUserActivity = function(){  //(event:Event):void{

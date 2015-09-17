@@ -13,13 +13,6 @@
 	function Controller(){ //view:IView, model:Model, dependencies:Vector.<Class> = null
 
 		//nadie hace new de Conrtoller, solo importa prototype
-
-		_dependencies = dependencies;
-
-		if(_view != null)  { _view.setController(this); }
-		if(_model != null) { _model.setController(this);}
-
-
 	}
 
 	//TODO

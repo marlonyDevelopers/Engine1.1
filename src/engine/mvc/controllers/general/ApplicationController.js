@@ -287,6 +287,8 @@
 		_soundController.addSound(new GameSound('standardClickSnd', new standardClick()));
 		}
 		*/
+
+		this.gameType = _gameTypeController;
 	}
 
 
