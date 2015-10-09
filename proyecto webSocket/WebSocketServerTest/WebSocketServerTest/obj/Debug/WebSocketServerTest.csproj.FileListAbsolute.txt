@@ -36,3 +36,6 @@ C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTes
 C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.pdb
 C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\SuperWebSocket.xml
 C:\Users\Pablo\Desktop\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.csprojResolveAssemblyReference.cache
+C:\xampp\htdocs\Engine1.1\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\bin\Debug\WebSocketServerTest.exe.config
+C:\xampp\htdocs\Engine1.1\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.exe
+C:\xampp\htdocs\Engine1.1\proyecto webSocket\WebSocketServerTest\WebSocketServerTest\obj\Debug\WebSocketServerTest.pdb

@@ -189,13 +189,13 @@
 				tryToMarkNumber(drawnBalls[i], response);
 			}
 			
-			/*var winPaid:Array     = JSON.parse(message[11]) as Array;
-			response.winPaid      = processWinPaidArray(winPaid);
+			var winPaid      = JSON.parse(message[11]);// as Array;
+			response.winPaid = processWinPaidArray(winPaid);
 
-			var willPayList:Array = JSON.parse(message[12]) as Array;
-			response.willPay      = processWillPayArray(willPayList);*/
+			var willPayList  = JSON.parse(message[12]); //as Array;
+			response.willPay = processWillPayArray(willPayList);
 
-			response.cardsData    = game.cards;
+			response.cardsData = game.cards;
 
 			//to print duringPLayData -> printDuringPlayData = 1 in game bingoGameConfig.js
 			if(game.gameConfig.loadCardsStateDuringPlay && game.gameConfig.printDuringPlayData) duringPlayLoader.printDuringPLayData(response);
@@ -221,6 +221,58 @@
 		}
 
 		function processWinPaidArray(winPaid){  //(winPaid:Array):Vector.<WinPrizes>{
+
+			/*
+				ver si JSON.parse() funciona en los otros navegadores.
+				LLega un array con 4 array adentro descodificando esto: [[],[],[],[6,11,13]]
+				1 vacio
+				2 vacio
+				3 vacio
+				4 lenht = 3   6,11,13
+			*/
+
+
+			var list = [];
+			for(var i = 0; i < winPaid.length; i++){
+
+
+				//objeto "WinPrizes".
+				var win = {};
+				win.cardNumber = i;
+				win.prizes = new Array();
+				win.prizesIndexes = new Array();
+
+
+
+				var hasWonSomething = false;
+				
+				if(game.cards[i].hasChanged){
+					game.cards[i].setTotalWin(0);
+				}
+				
+				for(var j = 0; j < winPaid[i].length; j++){
+					hasWonSomething = true;
+					var prizeIndex  = winPaid[i][j];
+					
+					var prize       = new Prize();
+					prize.index     = prizeIndex;
+					prize.name      = game.gameConfig.prizes[prizeIndex].name;
+					
+					win.prizesIndexes.push(prizeIndex);
+					win.prizes.push(prize);
+					
+					if(game.cards[i].enabled){
+						if(game.cards[i].hasChanged){
+							game.cards[i].addWin(game.gameConfig.prizes[prizeIndex].pay * game.bet);
+						}
+					}
+					
+				}
+				if(hasWonSomething){ list.push(win); }
+			}
+			return list;
+
+			/*
 			var list = [];
 			for(var i = 0; i < winPaid.length; i++){
 
@@ -251,7 +303,7 @@
 				}
 				if(hasWonSomething){ list.push(win); }
 			}
-			return list;
+			return list;*/
 		}
 
 		function processWillPayArray(willPayList){  //(willPayList:Array):Vector.<WillPay>{
