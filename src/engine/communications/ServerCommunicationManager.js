@@ -46,11 +46,16 @@
 			_server.connect(serverIP);
 		}
 
+
+
 		this.onConectionOk = function(){
 			console.log('--> onConectionOk (ServerCommunicationManager)');
-	    	window.dispatchEvent(new CustomEvent("CONNECTION_OK"));
-			//_ws.send("hola soy el serverCommunicationManager");  //TO TEST
+			//anterior
+	    	//window.dispatchEvent(new CustomEvent("CONNECTION_OK"));
+			ApplicationController.getApplicationController().sendNotification(EngineNotificationsEnum.CONNECTION_OK);
 		}
+
+
 
 		this.onClose = function(){ //no estaba en AS3
 			console.log('--> onClose ' + event.data);
@@ -77,8 +82,13 @@
 		//private functions
 
 		function sendServerResponseToClient(data){
-			window.dispatchEvent(new CustomEvent("SERVER_RESPONSE_EVENT", {detail:data}));
+
+			//anterior
+			//window.dispatchEvent(new CustomEvent("SERVER_RESPONSE_EVENT", {detail:data}));
+
+			ApplicationController.getApplicationController().sendNotification(EngineNotificationsEnum.SERVER_RESPONSE_EVENT, data);
 		}
+
 
 		function data_send(message, headersReady){
 

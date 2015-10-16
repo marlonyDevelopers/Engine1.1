@@ -254,7 +254,8 @@
 					hasWonSomething = true;
 					var prizeIndex  = winPaid[i][j];
 					
-					var prize       = new Prize();
+					//objeto "Prize".
+					var prize       = {};
 					prize.index     = prizeIndex;
 					prize.name      = game.gameConfig.prizes[prizeIndex].name;
 					
@@ -307,6 +308,59 @@
 		}
 
 		function processWillPayArray(willPayList){  //(willPayList:Array):Vector.<WillPay>{
+
+
+			// [[1, 1, 1, [17]], [3, 0, 0, [3]], [3, 0, 3, [9]]]
+
+			
+			var list = [];
+			for(var i = 0; i < willPayList.length; i++){
+				if(willPayList[i].length == 4){
+					
+
+					//objeto "willPay".
+					var willPay = {}; //new WillPay(willPayList[i][0], willPayList[i][1], willPayList[i][2]);
+					willPay.card           = willPayList[i][0];
+					willPay.line           = willPayList[i][1];
+					willPay.column         = willPayList[i][2];
+					willPay.boxIndex       = willPay.column + (willPay.line * 5);
+					willPay.boxTotalWin    = 0; //se setea mas abajo
+					willPay.prizeIndexList = new Array();
+
+
+					for(var j = 0; j < willPayList[i][3].length; j++){
+						willPay.prizeIndexList.push(willPayList[i][3][j]);
+						//new:
+						console.log("->>>" + typeof ApplicationController.getApplicationController().getGameConfig().prizes);
+						console.log("->>>" +  ApplicationController.getApplicationController().getGameConfig().prizes.length);
+						console.log("->>>" +  ApplicationController.getApplicationController().getGameConfig().prizes[willPayList[i][3][j]]);
+
+						console.log("->>>" +  willPayList[i].length);
+						console.log("->>>" +  willPayList[i][3].length);
+						console.log("->>>" +  willPayList[i][3][j]);
+
+						willPay.boxTotalWin += ApplicationController.getApplicationController().getGameConfig().prizes[willPayList[i][3][j]].pay * game.bet;
+					}
+					if(willPay.prizeIndexList.length > 0){
+						list.push(willPay);
+						var box     = game.cards[willPay.card].boxes[getIndexByColAndRow(willPay.column, willPay.line, game.gameConfig.cardsSize.x)];
+						var changed = false;
+						for(var x = 0; x < willPay.prizeIndexList.length; x++){
+							var index = willPay.prizeIndexList[x];
+							if(!box.hasAlmost(index)){
+								changed = true;
+								box.addAlmost(index, game.gameConfig.prizes[index].pay * game.bet);
+							}
+						}
+						if(!changed){
+							box.changed(false);
+						}
+					}
+				}
+			}
+			return list;
+
+			/*
 			var list = [];
 			for(var i = 0; i < willPayList.length; i++){
 				if(willPayList[i].length == 4){
@@ -333,7 +387,7 @@
 					}
 				}
 			}
-			return list;
+			return list;*/
 		}
 		
 		function getIndexByColAndRow(column, row, totalColumns){  //(column:int, row:int, totalColumns:int):int{

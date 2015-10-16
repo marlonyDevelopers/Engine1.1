@@ -18,6 +18,10 @@
 	EngineNotificationsEnum.AUTOPLAY_STOP_NOTIFICATION             = "AUTOPLAY_STOP_NOTIFICATION";
 	EngineNotificationsEnum.LOG_NOTIFICATION                       = "LOG_NOTIFICATION";
 
+	//"ex" dispatchEvent:
+	EngineNotificationsEnum.CONNECTION_OK                          = "CONNECTION_OK";
+	EngineNotificationsEnum.SERVER_RESPONSE_EVENT                  = "SERVER_RESPONSE_EVENT"
+
 	window.EngineNotificationsEnum = EngineNotificationsEnum;
 
 }(window));

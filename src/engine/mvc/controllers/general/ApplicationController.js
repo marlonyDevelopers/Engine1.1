@@ -1,8 +1,5 @@
 (function(window){
 
-
-
-
 	function ApplicationController(canvas, gameName, LanguageXmlEmbed, supportedLanguages, gameConfig, roundConfig, parameters, callGetCreditsEverySeconds, autoPanel, callJackpotEverySeconds){	
 		//this.parameters //public variables -> se hace asi, con this, o afuera con el prototype...
 		
@@ -28,6 +25,26 @@
 		var _gameTypeController; //GameTypeController
 		var _soundController;    //SoundController
 
+		
+		this.getGameName = function(){
+			return _gameName;
+		}
+ 
+		this.getGameConfig = function(){
+			return _gameConfig;
+		}
+
+		this.getGameSessionId = function(){
+			return _gameSessionId;
+		}
+
+		this.setGameSessionId = function(value){
+			_gameSessionId = value;
+		}
+		
+		this.getGameTypeController = function(){
+			return _gameTypeController;
+		}
 
 		//static variable
 		ApplicationController.freePlaySign;//static var freePlaySign:freePlayOverlay; //todo
@@ -87,7 +104,7 @@
 
 
 
-
+		
 
 
 
@@ -116,6 +133,8 @@
 			(!registered)? _controllers[controller.type] = controller : alert("The controller " + controller.type + " is already registered");
 		}
 
+		this.registerController(_gameTypeController);
+
 		this.getController = function(controllerType){  //(controllerType:Class):Controller{
 			if(!_controllers.hasOwnProperty(controllerType)){
 				alert("The controller of type: " + type + " is not registered");
@@ -140,27 +159,6 @@
 			}else{
 				_applicationViews[applicationView.type] = applicationView;
 			}
-		}
-
-
-		this.getGameName = function(){
-			return _gameName;
-		}
-
-		this.getGameConfig = function(){
-			return _gameConfig;
-		}
-
-		this.getGameSessionId = function(){
-			return _gameSessionId;
-		}
-
-		this.setGameSessionId = function(value){
-			_gameSessionId = value;
-		}
-		
-		this.getGameTypeController = function(){
-			return _gameTypeController;
 		}
 
 		this.showApplicationView = function(type){

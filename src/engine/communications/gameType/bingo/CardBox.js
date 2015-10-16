@@ -25,11 +25,32 @@
 			this.totalToWin += pays;
 			this.parentChangeFunction(true);
 		}
+
+		this.hasAlmost = function(index){
+			for(var i = 0; i < _almost.length; i++){
+				if(_almost[i].box == index){
+					return true;
+				}
+			}
+			return false;
+		}
+
+		this.reset = function(){
+			_changed = false;
+			_marked = false;
+			resetAlmost();
+		}
+	
+		function resetAlmost(){
+			_almost = [];
+			_totalToWin = 0;
+		}
 	}
 
 
 
-	//class Almost 
+
+	//"class" Almost 
 	function Almost(prizeIndex, pays, card){
 		this.box  = prizeIndex;
 		this.pays = pays;

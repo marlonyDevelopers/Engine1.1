@@ -208,6 +208,7 @@
 				value[i].enabled = _cards[i].enabled;
 			}
 			_cards = value;
+			_this.cards = _cards;
 		}
 
 		//private functions
@@ -276,22 +277,9 @@
 			}*/
 		}
 
-		this.cards = _cards
+		this.cards = _cards;
 
-		/*
-
-		TODO:
-
-		
-		internal function setCards(value:Vector.<BingoCardsData>):void{
-			for(var i:int = 0; i < _cards.length; i++){
-				value[i].enabled = _cards[i].enabled;
-			}
-			_cards = value;
-		}
-		*/
 	}
-
 
 
 	//to global scope access:

@@ -7,7 +7,11 @@
 		this._callGetCreditsEverySeconds = callGetCreditsEverySeconds;
 		this._callJackpotEverySeconds    = callJackpotEverySeconds;
 
-		window.addEventListener("SERVER_RESPONSE_EVENT", onServerResponse);
+		
+		//anterior
+		//window.addEventListener("SERVER_RESPONSE_EVENT", onServerResponse);
+		//nuevo -> paso a init, porque no estaba aun applicationcontroller
+		
 
 
 		//public functions
@@ -43,11 +47,34 @@
 			return _server; 
 		}
 
+		//nuevo
+		this.init = function(){
+			setupSubscriptions();
+		}	
+
+		//nuevo
+		this.notificationReceived = function(type, data){
+			switch(type){
+				case EngineNotificationsEnum.SERVER_RESPONSE_EVENT:
+					onServerResponse(data);
+				break;
+			}
+		}
+
 		//private functions
 
-		function onServerResponse(event){ 
+		//nuevo
+		function setupSubscriptions(){
+			var notifications = []; 
+			notifications.push(
+				EngineNotificationsEnum.CONNECTION_OK,
+				EngineNotificationsEnum.SERVER_RESPONSE_EVENT);
+			//ApplicationController.getApplicationController();
+			ApplicationController.getApplicationController().addSubscriber(notifications, _this);	
+		}
 
-			var response = event.detail;
+		function onServerResponse(data){ 
+			var response = data;
 			if(response && response.type){
 				
 				switch(response.type){
@@ -169,6 +196,134 @@
 				}
 			}
 		}
+
+
+		/*anterior
+
+		function onServerResponse(event){ 
+
+			var response = event.detail;
+			if(response && response.type){
+				
+				switch(response.type){
+					case "InitResponse":
+						
+						//var initResponse:InitResponse = event.response as InitResponse;
+						_this._countersController.setCounterValue(CountersController.JACKPOT_COUNTER, response.jackpot);
+						_this._countersController.setCounterValue(CountersController.COIN_COUNTER, response.coin);
+						_this._countersController.setCounterValue(CountersController.CREDITS_COUNTER, response.credits);
+						_this._countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (response.credits_in_cash));
+						_this._countersController.setCounterValue(CountersController.BET_COUNTER, response.bet);
+						_this._countersController.setCounterValue(CountersController.TOTAL_BET_COUNTER, (response.totalBet));
+						_this._countersController.setCounterValue(CountersController.TOTALBET_IN_CASH_COUNTER, (response.totalBet * _server.gameType.coin)/100); //por que aca y no en la respuesta??
+						
+						
+						_this.startGcTimer(_server.gameType.getCredits, _this._callGetCreditsEverySeconds);
+
+						//To TEST parar
+						/*setTimeout(stop, 7000);
+						function stop(){
+							_this.stopGcTimer();
+						}
+						
+					break;
+					case "PlayResponse":
+						
+						var playResponse:PlayResponse = event.response as PlayResponse;
+						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, playResponse.credits);
+						_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (playResponse.credits_in_cash));
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, playResponse.jackpot);
+						
+					break;
+					case "GetExtraBallResponse":
+						
+						var getExtraResponse:GetExtraBallResponse = event.response as GetExtraBallResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, getExtraResponse.jackpot);
+						//cuando es ultima extra, la resta del win se hace mismo en BingoMessageDecoder, cuando se arma getExtraResponse
+						_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (getExtraResponse.credits_in_cash));
+						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, getExtraResponse.credits);
+						
+					break;
+					case "GetCreditsResponse":
+						
+						var getCreditsResponse:GetCreditsResponse = event.response as GetCreditsResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, getCreditsResponse.jackpot);
+						var parameters:ParametersData = ApplicationController.getApplicationController().parameters;
+						if(gcActive && !parameters.is_log )
+						{
+							//trace("GC - updateCounter - BingoController");
+							_countersController.setCounterValue(CountersController.SPECIAL_VALUE_COUNTER, getCreditsResponse.specialValue);
+							_countersController.setCounterValue(CountersController.CREDITS_COUNTER, getCreditsResponse.credits);
+							_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (getCreditsResponse.credits_in_cash));
+						}
+						
+					break;
+					case "ChangeConfigCards":
+						
+						var changeConfigCardResponse:ChangeConfigCardsResponse = event.response as ChangeConfigCardsResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeConfigCardResponse.jackpot);
+						_countersController.setCounterValue(CountersController.TOTAL_BET_COUNTER, changeConfigCardResponse.totalBet);
+						_countersController.setCounterValue(CountersController.TOTALBET_IN_CASH_COUNTER, (changeConfigCardResponse.totalBet * _server.gameType.getCoin())/100);
+						
+					break;
+					case "ChangeCoinResponse":
+						
+						var changeCoinResponse:ChangeCoinResponse = event.response as ChangeCoinResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeCoinResponse.jackpot);
+						_countersController.setCounterValue(CountersController.COIN_COUNTER, changeCoinResponse.coin);
+						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, changeCoinResponse.credits);
+						_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (changeCoinResponse.credits_in_cash));
+						_countersController.setCounterValue(CountersController.TOTALBET_IN_CASH_COUNTER, (changeCoinResponse.totalBet * _server.gameType.getCoin())/100);
+						_countersController.setCounterValue(CountersController.SPECIAL_VALUE_COUNTER, changeCoinResponse.specialValue);
+						
+					break;
+					case "ChangeBetResponse":
+						
+						var changeBetResponse:ChangeBetResponse = event.response as ChangeBetResponse;
+						_countersController.setCounterValue(CountersController.BET_COUNTER, changeBetResponse.bet);
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeBetResponse.jackpot);
+						_countersController.setCounterValue(CountersController.TOTAL_BET_COUNTER, changeBetResponse.totalBet);
+						_countersController.setCounterValue(CountersController.TOTALBET_IN_CASH_COUNTER, (changeBetResponse.totalBet * _server.gameType.getCoin())/100);
+						_countersController.setCounterValue(CountersController.SPECIAL_VALUE_COUNTER, changeBetResponse.specialValue);
+						
+					break;
+					case "CancelExtraBallResponse":
+						
+						var cancelExtraBallResponse:CancelExtraBallResponse = event.response as CancelExtraBallResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, cancelExtraBallResponse.jackpot);
+						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, cancelExtraBallResponse.credits);
+						
+					break;
+					case "ConnLostResponse":
+						
+						ApplicationController.getApplicationController().getCurrentApplicationView().showConnLost();
+						
+					break;
+					case "ChangeStageResponse":
+						
+						var changeStageResponse:ChangeStageResponse = event.response as ChangeStageResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeStageResponse.jackpot);
+						
+					break;
+					case "JackpotResponse":
+						
+						var jackpotResponse:JackpotResponse = event.response as JackpotResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, jackpotResponse.jackpot);
+						
+					break;
+					case "JackpotShowResponse":
+						
+						var jackpotShowResponse:JackpotShowResponse = event.response as JackpotShowResponse;
+						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, jackpotShowResponse.jackpot);
+						
+						//TODO: RESTARLE el win y el jackpot al credit, para asi animar
+						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, jackpotShowResponse.credits);
+						_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (jackpotShowResponse.credits_in_cash));
+						
+					break;
+				}
+			}
+		}*/
 
 
 		//por ahora no va, parece que solo se necesita por SPEED_COUNTER, y deberia estar en ApplicationController

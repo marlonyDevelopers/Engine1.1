@@ -8,6 +8,25 @@
 		this.numbers  = [];
 		this.boxes    = [];
 
+		this.hasChanged = function(){
+			return _changed;
+		}
+
+		
+		/*public function get numbers():Vector.<int>
+		{
+			return _numbers;
+		}
+		
+		public function set numbers(value:Vector.<int>):void{
+			_numbers = value;
+		}
+		
+		public function get boxes():Vector.<CardBox>{
+			return _boxes;
+		}*/
+
+
 		this.addNumbersFromString = function(stringOfNumbers, separator){  //(stringOfNumbers:String, separator:String=";")
 			//if(separator == undefined || separator == "") separator = ";";
 			if(separator == null) separator = ";";
@@ -42,14 +61,18 @@
 			for(var i = 0; i < this.boxes.length; i++){
 				this.boxes[i].reset();
 			}
-			setChanged(false);
-			this.totalWin = 0;
+			_this.setChanged(false);
+			_this.totalWin = 0;
 		}
 
 		this.changed = function(value){
 			for(var i = 0; i < this.boxes.length; i++){
 				this.boxes[i].changed(value);
 			}
+		}
+
+		this.setTotalWin = function(value){
+			_this.totalWin = 0;
 		}
 
 		this.addWin = function(value){
