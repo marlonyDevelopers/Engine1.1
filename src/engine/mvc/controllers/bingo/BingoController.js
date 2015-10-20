@@ -78,7 +78,7 @@
 			if(response && response.type){
 				
 				switch(response.type){
-					case "InitResponse":
+					case BingoResponseTypes.INIT: //"InitResponse":
 						
 						//var initResponse:InitResponse = event.response as InitResponse;
 						_this._countersController.setCounterValue(CountersController.JACKPOT_COUNTER, response.jackpot);
@@ -99,7 +99,7 @@
 						}*/
 						
 					break;
-					case "PlayResponse":
+					case BingoResponseTypes.PLAY : //"PlayResponse":
 						/*
 						var playResponse:PlayResponse = event.response as PlayResponse;
 						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, playResponse.credits);
@@ -107,7 +107,7 @@
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, playResponse.jackpot);
 						*/
 					break;
-					case "GetExtraBallResponse":
+					case BingoResponseTypes.GET_EXTRA_BALL: //"GetExtraBallResponse":
 						/*
 						var getExtraResponse:GetExtraBallResponse = event.response as GetExtraBallResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, getExtraResponse.jackpot);
@@ -116,7 +116,7 @@
 						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, getExtraResponse.credits);
 						*/
 					break;
-					case "GetCreditsResponse":
+					case BingoResponseTypes.GET_CREDITS_RESPONSE: //"GetCreditsResponse":
 						/*
 						var getCreditsResponse:GetCreditsResponse = event.response as GetCreditsResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, getCreditsResponse.jackpot);
@@ -130,7 +130,7 @@
 						}
 						*/
 					break;
-					case "ChangeConfigCards":
+					case BingoResponseTypes.CHANGE_CONFIG_CARDS: //"ChangeConfigCards":
 						/*
 						var changeConfigCardResponse:ChangeConfigCardsResponse = event.response as ChangeConfigCardsResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeConfigCardResponse.jackpot);
@@ -138,7 +138,7 @@
 						_countersController.setCounterValue(CountersController.TOTALBET_IN_CASH_COUNTER, (changeConfigCardResponse.totalBet * _server.gameType.getCoin())/100);
 						*/
 					break;
-					case "ChangeCoinResponse":
+					case BingoResponseTypes.CHANGE_COIN_RESPONSE: //"ChangeCoinResponse":
 						/*
 						var changeCoinResponse:ChangeCoinResponse = event.response as ChangeCoinResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeCoinResponse.jackpot);
@@ -149,7 +149,7 @@
 						_countersController.setCounterValue(CountersController.SPECIAL_VALUE_COUNTER, changeCoinResponse.specialValue);
 						*/
 					break;
-					case "ChangeBetResponse":
+					case BingoResponseTypes.CHANGE_BET_RESPONSE: //"ChangeBetResponse":
 						/*
 						var changeBetResponse:ChangeBetResponse = event.response as ChangeBetResponse;
 						_countersController.setCounterValue(CountersController.BET_COUNTER, changeBetResponse.bet);
@@ -159,31 +159,31 @@
 						_countersController.setCounterValue(CountersController.SPECIAL_VALUE_COUNTER, changeBetResponse.specialValue);
 						*/
 					break;
-					case "CancelExtraBallResponse":
+					case BingoResponseTypes.CANCEL_EXTRA_BALL: //"CancelExtraBallResponse":
 						/*
 						var cancelExtraBallResponse:CancelExtraBallResponse = event.response as CancelExtraBallResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, cancelExtraBallResponse.jackpot);
 						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, cancelExtraBallResponse.credits);
 						*/
 					break;
-					case "ConnLostResponse":
+					case BingoResponseTypes.CONN_LOST: // "ConnLostResponse":
 						/*
 						ApplicationController.getApplicationController().getCurrentApplicationView().showConnLost();
 						*/
 					break;
-					case "ChangeStageResponse":
+					case BingoResponseTypes.CHANGE_STAGE_RESPONSE: //"ChangeStageResponse":
 						/*
 						var changeStageResponse:ChangeStageResponse = event.response as ChangeStageResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, changeStageResponse.jackpot);
 						*/
 					break;
-					case "JackpotResponse":
+					case BingoResponseTypes.JACKPOT_RESPONSE: //"JackpotResponse":
 						/*
 						var jackpotResponse:JackpotResponse = event.response as JackpotResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, jackpotResponse.jackpot);
 						*/
 					break;
-					case "JackpotShowResponse":
+					case BingoResponseTypes.JACKPOT_SHOW_RESPONSE: //"JackpotShowResponse":
 						/*
 						var jackpotShowResponse:JackpotShowResponse = event.response as JackpotShowResponse;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, jackpotShowResponse.jackpot);

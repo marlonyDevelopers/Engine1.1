@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title> Juego Prueba Engine</title>
+	<title>Engine 1.1 js</title>
 	
 	<script src="communications/ServerCommunicationManager.js"></script>
 	<script src="communications/server/SocketServer.js"></script>
@@ -10,6 +10,28 @@
 	<script src="communications/gameType/bingo/BingoMessageDecoder.js"></script>
 	<script src="communications/gameType/bingo/BingoCardsData.js"></script>
 	<script src="communications/gameType/bingo/CardBox.js"></script>
+	<script src="communications/gameType/bingo/DuringPlayState.js"></script>
+	<script src="communications/gameType/bingo/DuringPlayStateLoader.js"></script>
+
+	<script src="communications/serverresponsetypes/bingo/PlayResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/ChangeCardNumbersResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/InitResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/CancelExtraBallResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/ChangeBetResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/ChangeCoinResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/ChangeConfigCardsResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/GetCreditsResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/GetExtraBallResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/JackpotResponse.js"></script>
+	<script src="communications/serverresponsetypes/bingo/JackpotShowResponse.js"></script>
+
+	<script src="communications/serverresponsetypes/general/ConnLostResponse.js"></script>
+	<script src="communications/serverresponsetypes/general/FreeCashResponse.js"></script>
+	<script src="communications/serverresponsetypes/general/LoginResponse.js"></script>
+
+	<script src="communications/serverresponsetypes/bingo/complementarydata/WillPay.js"></script>
+	<script src="communications/serverresponsetypes/bingo/complementarydata/WinPrizes.js"></script>
+	<script src="communications/serverresponsetypes/bingo/enums/BingoResponseTypes.js"></script>
 	
 	<!--mvc folder-->
 	<script src="mvc/controllers/general/ApplicationController.js"></script>

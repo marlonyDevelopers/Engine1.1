@@ -10,6 +10,10 @@
 	    this.totalToWin;
 	    this.parentChangeFunction = parentChangeFunction;
 
+		this.mark = function(value){  //(value:Boolean):void{
+			this.marked = value; 
+		}
+
 	    this.setMarked = function(value){
 	    	this.changed    = true;
 			this.marked     = value;

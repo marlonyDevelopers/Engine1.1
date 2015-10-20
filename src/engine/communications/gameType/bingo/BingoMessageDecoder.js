@@ -4,18 +4,17 @@
 
 		var game;
 		var _this = this;
-
+		var duringPlayLoader;
 
 		//public functions
 
 		this.setGameType = function(gameType){
 			game = gameType;
-			/*
-			if(this.game.gameConfig.loadCardsStateDuringPlay){
+			
+			if(game.gameConfig.loadCardsStateDuringPlay){
 				duringPlayLoader = new DuringPlayStateLoader(game);
-			}*/
+			}
 		}
-
 
 		this.decodeServerMessage = function(message){   //(message:Array):BaseResponse{
 			var response;
@@ -85,9 +84,8 @@
 
 		function decodeInitMessage(message){
 			console.log('--> init '+ message.toString());
-			var response = {};
+			var response = new InitResponse();
 			
-			response.type              = "InitResponse";
 			response.coin              = game.coin = message[2];
 			response.credits           = message[3] / game.coin;
 			response.credits_in_cash   = (parseInt(message[3]))/100;
@@ -99,7 +97,7 @@
 			
 			var openCards  = message[7].split("");
 			var index      = 9;
-			response.cards = [];
+
 			for(var i = 0; i < openCards.length; i++){
 				var card = new BingoCardsData(); //var card:BingoCardsData
 				card.addNumbersFromString(message[index]);
@@ -112,7 +110,6 @@
 			
 			var drawBalls = message[index].split(";");
 			index++;
-			response.drawnBalls = [];
 			for(i = 0; i < drawBalls.length; i++){
 				response.drawnBalls.push(drawBalls[i]);
 			}
@@ -129,11 +126,9 @@
 
 		function decodeChangeCardNumbersMessage(message){
 			console.log('--> ChangeCardNumbers '+ message.toString());
-			var response  = {};
-			response.type = "ChangeCardNumbersResponse";
 			
-			response.cards = [];
-			var cards = message.length;
+			var response  = new ChangeCardNumbersResponse();//{};
+			var cards     = message.length;
 			
 			for(var i = 2; i < cards; i++){
 				var card = new BingoCardsData();
@@ -145,6 +140,16 @@
 		}
 
 
+		function decodeGetCreditsResponse(message){
+			var response  = new GetCreditsResponse(); //{};
+			//response.type = "GetCreditsResponse";
+
+			response.credits         = message[2] / game.coin;
+			response.credits_in_cash = (parseInt(message[2]))/100;
+			response.jackpot         = message[3]/100;
+			response.specialValue    = message[4]/100;
+			return response;
+		}
 
 		function decodePlayResponse(message){
 			
@@ -155,9 +160,7 @@
 			}
 			currentExtraPosition = 1;
 
-
-			var response  = {};
-			response.type = "PlayResponse";
+			var response  = new PlayResponse(); 
 			
 			response.credits         = message[2] / game.coin;
 			response.credits_in_cash = (parseInt(message[2])) / 100;
@@ -174,7 +177,6 @@
 			response.hasExtra       = (message[6] == "0") ? false : true;
 			response.extraCost      = message[7]; 
 			
-			response.freeExtraPos   = [];
 			var freeExtra = message[8].split(";");
 			for(i = 0; i < freeExtra.length; i++){
 				response.freeExtraPos.push(freeExtra[i]);
@@ -183,7 +185,7 @@
 			response.specialValue = message[15]/100;
 			nextExtraCost         = response.extraCost;
 			var drawnBalls        = message[5].split(";");
-			response.drawnBalls   = [];
+
 			for(i = 0; i < drawnBalls.length; i++){
 				response.drawnBalls.push(drawnBalls[i]);
 				tryToMarkNumber(drawnBalls[i], response);
@@ -335,9 +337,21 @@
 						console.log("->>>" +  ApplicationController.getApplicationController().getGameConfig().prizes.length);
 						console.log("->>>" +  ApplicationController.getApplicationController().getGameConfig().prizes[willPayList[i][3][j]]);
 
+
+						console.log("->>>" +  willPayList);
 						console.log("->>>" +  willPayList[i].length);
 						console.log("->>>" +  willPayList[i][3].length);
 						console.log("->>>" +  willPayList[i][3][j]);
+
+						// ->>>object
+						// ->>>17
+						// ->>>undefined
+						// ->>>4
+						// ->>>1
+						// ->>>17
+						/*
+						El probelma es que busca por el indice, viene 17, pero
+						*/
 
 						willPay.boxTotalWin += ApplicationController.getApplicationController().getGameConfig().prizes[willPayList[i][3][j]].pay * game.bet;
 					}
@@ -393,21 +407,6 @@
 		function getIndexByColAndRow(column, row, totalColumns){  //(column:int, row:int, totalColumns:int):int{
 			var pos = column + (row * totalColumns);
 			return pos;
-		}
-
-
-
-
-
-		function decodeGetCreditsResponse(message){
-			var response  = {};
-			response.type = "GetCreditsResponse";
-
-			response.credits         = message[2] / game.coin;
-			response.credits_in_cash = (parseInt(message[2]))/100;
-			response.jackpot         = message[3]/100;
-			response.specialValue    = message[4]/100;
-			return response;
 		}
 
 		function countOpenCards(cards){
