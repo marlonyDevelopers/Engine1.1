@@ -57,7 +57,7 @@
 
 
 
-		this.onClose = function(){ //no estaba en AS3
+		this.onClose = function(event){ //no estaba en AS3
 			console.log('--> onClose ' + event.data);
 		}
 

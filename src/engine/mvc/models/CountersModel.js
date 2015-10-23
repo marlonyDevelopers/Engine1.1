@@ -32,7 +32,7 @@
 		}
 		
 		this.getCounterValueVector = function(key){  //key:String):Vector.<int>{
-			if(validateCounterExistance(key)){}
+			if(validateCounterExistance(key))
 				return _counters[key];
 			alert("Counter never registered: " + key);
 		}		
