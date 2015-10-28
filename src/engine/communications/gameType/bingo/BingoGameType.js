@@ -100,7 +100,7 @@
 		 * Send the play (W) message to the server
 		 */
 		this.Play = function(){
-			alert("BingoGameType - Engine - Play ->  TODO: _countersController.setCounterValue(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER, 0);");
+			//alert("BingoGameType - Engine - Play ->  TODO: _countersController.setCounterValue(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER, 0);");
 			//_countersController.setCounterValue(CountersController.PAID_IN_CASH_STANDARDBAR_COUNTER, 0);
 			var playCost = _openCards * _this.bet;
 			if(checkCredits(playCost, false)){

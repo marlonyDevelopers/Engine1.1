@@ -205,6 +205,38 @@
 			return response;
 		}
 
+
+		function decodeCancelExtraBallResponse(message){  //(message:Array):CancelExtraBallResponse{
+			for(var i = 0; i < game.cards.length; i++){
+				game.cards[i].reset();
+			}
+			
+			var response               = new CancelExtraBallResponse();
+			response.credits           = message[2] / game.coin;
+			response.creditsEnd        = message[2] / game.coin;
+			response.credits_in_cash   = (parseInt(message[2]))/100;
+			response.jackpot           = parseInt(message[3])/100;
+			response.win               = lastWin;
+			response.win_in_cash       = response.win * (game.coin/100);
+			
+			response.credits          -= lastWin;
+		
+			//A cambiar - ticket id: 15220
+			response.credits_in_cashEnd = response.credits_in_cash;
+			response.credits_in_cash   -= response.win_in_cash;
+			
+			var balls   = message[4].split(";");
+			var params  = ApplicationController.getApplicationController().parameters;
+			var willPay = (params.is_log && params.logData) ? calculateCancelPayFromLog(params.logData) : message[5].split(";");
+			if(balls.length != willPay.length){
+				alert("Error on cancel extra ball, the server sent different ball and ball pays numbers");
+			}
+			for(i = 0; i < balls.length; i++){
+				response.remainingBalls.push({ballNumber:balls[i], win:willPay[i] * game.bet});
+			}
+			return response;
+		}
+
 		function tryToMarkNumber(number, response){  //(number:int, response:PlayResponse = null):void{
 			for(var i = 0; i < game.cards.length; i++){
 				if(game.cards[i].enabled){
@@ -420,13 +452,75 @@
 		}
 
 
+		function calculateCancelPayFromLog(logData){  //(logData:LogData):Array{
+			
+			alert("TODO:  bingoMessageDecoder.js -> calculateCancelPayFromLog");
+			/*
+			var willPay:Array = new Array();
+			var ocurrences:Dictionary = new Dictionary();
+			var wins:Array;
+			var lastWin:String = "";
+			
+			for(var i:int = 0; i <= logData.buyedExtraBalls; i++){
+				if(lastWin != logData.priceIndexes[i]){
+					lastWin = logData.priceIndexes[i];
+					wins = logData.priceIndexes[i].split(",");
+					for(var j:int = 0; j < wins.length; j++){
+						var count:int = lastWin.split(wins[j]).length;
+						if(wins[j] in ocurrences && ocurrences[wins[j]] < count){
+							ocurrences[wins[j]] = count;
+						}else{
+							ocurrences[wins[j]] = 1;
+						}
+					}
+				}
+			}
+			
+			for(i; i <logData.priceIndexes.length; i++){
+				if(lastWin != logData.priceIndexes[i]){
+					lastWin = logData.priceIndexes[i];
+					wins = logData.priceIndexes[i].split(",");
+					var lineOcurrences:Dictionary = new Dictionary();
+					for(var l:int = 0; l < wins.length; l++){
+						if(wins[l] in lineOcurrences){
+							lineOcurrences[wins[l]] += 1;
+						}else{
+							lineOcurrences[wins[l]] = 1;
+						}
+					}
+					
+					var prizePay:int = 0;
+					for(var key:String in lineOcurrences){
+						var prev:int = (ocurrences.hasOwnProperty(key)) ? ocurrences[key] : 0;
+						var newCount:int = lineOcurrences[key];
+						var dif:int = newCount - prev;
+						if(dif > 0){
+							ocurrences[key] = (ocurrences.hasOwnProperty(key)) ? ocurrences[key] + dif : dif;
+							prizePay += getPrizePay(key) * dif;
+						}
+					}
+					willPay.push(prizePay);	
+				}else{
+					willPay.push(0);
+				}
+				
+			}
+			
+			function getPrizePay(prizeName:String):int{
+				var gameConfig:BingoGameConfig = ApplicationController.getApplicationController().gameType.gameConfig as BingoGameConfig;
+				for(var i:int = 0; i < gameConfig.prizes.length; i++){
+					if(gameConfig.prizes[i].name == prizeName){
+						return gameConfig.prizes[i].pay;
+					}
+				}
+				return null;
+			}
+			
+			return willPay;*/
+		}
+
 
 	}
-
-
-
-
-
 
 	//to global scope access:
 	window.BingoMessageDecoder = BingoMessageDecoder;
