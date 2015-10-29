@@ -50,7 +50,7 @@
 		}
 
 		this.setChanged = function(value){
-			this.changed = value;
+			_this.changed = value;
 		}
 
 		this.addNumbersFromArray = function(arrayOfNumbers){
@@ -65,9 +65,9 @@
 			_this.totalWin = 0;
 		}
 
-		this.changed = function(value){
+		this.changedfunc = function(value){
 			for(var i = 0; i < this.boxes.length; i++){
-				this.boxes[i].changed(value);
+				this.boxes[i].changedfunc(value);
 			}
 		}
 
@@ -76,7 +76,7 @@
 		}
 
 		this.addWin = function(value){
-			this.totalWin += value;
+			_this.totalWin += value;
 		}
 	}
 

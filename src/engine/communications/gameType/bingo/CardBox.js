@@ -11,23 +11,23 @@
 	    this.parentChangeFunction = parentChangeFunction;
 
 		this.mark = function(value){  //(value:Boolean):void{
-			this.marked = value; 
+			_this.marked = value; 
 		}
 
 	    this.setMarked = function(value){
-	    	this.changed    = true;
-			this.marked     = value;
-			this.almost     = [];
-			this.totalToWin = 0;
-			this.parentChangeFunction(true);
+	    	_this.changed    = true;
+			_this.marked     = value;
+			_this.almost     = [];
+			_this.totalToWin = 0;
+			_this.parentChangeFunction(true);
 		}
 
 		this.addAlmost = function(prizeIndex, pays){  //(prizeIndex:int, pays:int):void{
-			this.changed = true;
-			this.marked = false;
-			this.almost.push(new Almost(prizeIndex, pays));
-			this.totalToWin += pays;
-			this.parentChangeFunction(true);
+			_this.changed = true;
+			_this.marked = false;
+			_this.almost.push(new Almost(prizeIndex, pays));
+			_this.totalToWin += pays;
+			_this.parentChangeFunction(true);
 		}
 
 		this.hasAlmost = function(index){
@@ -48,6 +48,10 @@
 		function resetAlmost(){
 			_almost = [];
 			_totalToWin = 0;
+		}
+
+		this.changedfunc = function(value){
+			_this.changed = value;
 		}
 	}
 

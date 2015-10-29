@@ -100,35 +100,35 @@
 						
 					break;
 					case BingoResponseTypes.PLAY : //"PlayResponse":
-						/*
-						var playResponse:PlayResponse = event.response as PlayResponse;
+						
+						var playResponse = response;
 						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, playResponse.credits);
 						_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (playResponse.credits_in_cash));
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, playResponse.jackpot);
-						*/
+						
 					break;
 					case BingoResponseTypes.GET_EXTRA_BALL: //"GetExtraBallResponse":
-						/*
-						var getExtraResponse:GetExtraBallResponse = event.response as GetExtraBallResponse;
+						
+						var getExtraResponse = response;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, getExtraResponse.jackpot);
 						//cuando es ultima extra, la resta del win se hace mismo en BingoMessageDecoder, cuando se arma getExtraResponse
 						_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (getExtraResponse.credits_in_cash));
 						_countersController.setCounterValue(CountersController.CREDITS_COUNTER, getExtraResponse.credits);
-						*/
+						
 					break;
 					case BingoResponseTypes.GET_CREDITS_RESPONSE: //"GetCreditsResponse":
 						/*
-						var getCreditsResponse:GetCreditsResponse = event.response as GetCreditsResponse;
+						var getCreditsResponse = response;
 						_countersController.setCounterValue(CountersController.JACKPOT_COUNTER, getCreditsResponse.jackpot);
-						var parameters:ParametersData = ApplicationController.getApplicationController().parameters;
+						var parameters = ApplicationController.getApplicationController().parameters;
 						if(gcActive && !parameters.is_log )
 						{
 							//trace("GC - updateCounter - BingoController");
 							_countersController.setCounterValue(CountersController.SPECIAL_VALUE_COUNTER, getCreditsResponse.specialValue);
 							_countersController.setCounterValue(CountersController.CREDITS_COUNTER, getCreditsResponse.credits);
 							_countersController.setCounterValue(CountersController.CREDITS_IN_CASH_COUNTER, (getCreditsResponse.credits_in_cash));
-						}
-						*/
+						}*/
+						
 					break;
 					case BingoResponseTypes.CHANGE_CONFIG_CARDS: //"ChangeConfigCards":
 						/*

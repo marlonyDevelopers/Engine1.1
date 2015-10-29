@@ -4,6 +4,10 @@
 
 		var game;
 		var _this = this;
+
+		var lastWin              = 0;
+		var nextExtraCost        = 0;
+		var currentExtraPosition = 1;
 		var duringPlayLoader;
 
 		//public functions
@@ -70,6 +74,13 @@
 			return response;
 		}
 
+		this.getLastWin = function(){
+			return lastWin;
+		}
+		
+		this.getNextExtraCost = function(){
+			return nextExtraCost;
+		}
 
 		//private functions
 
@@ -205,6 +216,51 @@
 			return response;
 		}
 
+		function decodeExtraBallResponse(message){  //(message:Array):GetExtraBallResponse{
+			
+			for(var i = 0; i < game.cards.length; i++){
+				game.cards[i].changedfunc(false); //era changed(false) pero tenia 2 definiciones una funcion y otra variable incompatibles y saltaba
+			}
+				
+			var response                  = new GetExtraBallResponse();
+			response.credits              = message[2] / game.coin;
+			response.credits_in_cash      = (parseInt(message[2]))/100;
+			lastWin    = response.win     = message[3];
+			response.win_in_cash          = response.win * (game.coin/100);
+			response.jackpot              = parseInt(message[4])/100;
+			response.bonusData            = message[8];
+			response.bonusExtraData       = message[11]; //nombre protocolo: Bonus Data Position
+			response.bonusData2           = message[12];
+			response.currentExtraPosition = currentExtraPosition;
+
+			//quita el win de ultima extra.
+			
+			var index = game.gameConfig.numberOfExtraBalls;
+			if(	currentExtraPosition == index){
+				response.credits -= response.win;
+				response.credits_in_cash -= response.win_in_cash;
+			}
+			
+			response.ball          = message[5];
+			tryToMarkNumber(response.ball);
+			response.hasMoreExtras = (message[6] == "0") ? false : true;
+			response.nextExtraCost = message[7];
+
+			nextExtraCost = response.nextExtraCost;
+			
+			var winPaid      = JSON.parse(message[9]);
+			response.winPaid = processWinPaidArray(winPaid);
+			
+			var willPay      = JSON.parse(message[10]);
+			response.willPay = processWillPayArray(willPay);
+			
+			currentExtraPosition++;
+			
+			response.cardsData    = game.cards;
+			response.specialValue = message[12]/100;
+
+			return response;
+		}
 
 		function decodeCancelExtraBallResponse(message){  //(message:Array):CancelExtraBallResponse{
 			for(var i = 0; i < game.cards.length; i++){
